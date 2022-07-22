@@ -37,6 +37,10 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `npm run cypress`
+
+Launches the cypress test runner. For these tests to work, the site must be running on development mode first.
+
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
