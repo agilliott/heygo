@@ -16,6 +16,8 @@ This is hosted by [Netlify](netlify.com) and has CD on merge to main.
 
 [React router](https://reactrouter.com/docs/en/v6/getting-started/overview) - again a quick and easy to use library for routing in react.
 
+[Cypress](https://docs.cypress.io/) - familiar e2e test runner and RTL has a cypress wrapper so you can use the same syntax for both unit, integration and e2e tests!
+
 ## Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and typescript.
@@ -39,7 +41,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `npm run cypress`
 
-Launches the cypress test runner. For these tests to work, the site must be running on development mode first.
+Launches the cypress test runner. For these tests to work, the site must be running in the development mode first using `npm start` in a separate terminal.
 
 ### `npm run build`
 

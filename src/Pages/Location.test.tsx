@@ -6,4 +6,8 @@ describe('<Location/>', () => {
   test('renders the Locationpage content', () => {
     render(<Location />);
   });
+  test('has a loading state when given an invalid url param', () => {
+    render(<Location />);
+    screen.getByRole('progressbar');
+  });
 });

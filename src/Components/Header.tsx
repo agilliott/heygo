@@ -1,14 +1,11 @@
 import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
-
-// TODO: Show nav for home when on location page
+import { Box, Typography } from '@mui/material';
 
 const Header = () => {
   return (
     <header>
       <Box pt={3} textAlign="center">
-        <Typography variant="subtitle2">The front end test</Typography>
-        <Button variant="text">Take me home</Button>
+        <Typography variant="overline">front end test</Typography>
       </Box>
     </header>
   );

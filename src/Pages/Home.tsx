@@ -1,60 +1,61 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import {
   Box,
   Typography,
   Autocomplete,
   TextField,
   Button,
-  CircularProgress,
 } from '@mui/material';
+import debounce from 'lodash.debounce';
 
 // TODO: no options jolly message.
 
 interface Location {
+  city: string;
+  country: string;
+  countryCode: string;
   id: number;
+  latitude: number;
+  longitude: number;
   name: string;
+  population: number;
+  region: string;
+  regionCode: string;
+  type: string;
+  wikiDataId: string;
 }
-
-const topFilms = [
-  { name: 'The Shawshank Redemption', id: 1994 },
-  { name: 'The Godfather', id: 1972 },
-  { name: 'The Godfather: Part II', id: 1974 },
-  { name: 'The Dark Knight', id: 2008 },
-  { name: '12 Angry Men', id: 1957 },
-  { name: "Schindler's List", id: 1993 },
-  { name: 'Pulp Fiction', id: 1994 },
-];
 
 const Home = () => {
   const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState<readonly Location[]>([]);
-  const loading = open && options.length === 0;
+  const [searchTerm, setSearchTerm] = React.useState<string>('');
+  const [selected, setSelected] = React.useState<Location | null>(null);
+  const [options, setOptions] = React.useState<Location[]>([]);
 
-  axios
-    .get(`https://code-challenge-backend.herokuapp.com/locations?q=lon`)
-    .then((res) => {
-      const locations = res;
-      console.log(locations);
-    });
+  function getOptions(term: string) {
+    const config = {
+      method: 'GET',
+      url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
+      params: { namePrefix: term, limit: '10' },
+      headers: {
+        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_GEODB_KEY || '',
+        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
+      },
+    };
+
+    axios(config)
+      .then(function(response) {
+        setOptions(response.data.data);
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
+  }
 
   React.useEffect(() => {
-    let active = true;
-
-    if (!loading) {
-      return undefined;
-    }
-
-    (async () => {
-      if (active) {
-        setOptions([...topFilms]);
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
+    getOptions(searchTerm);
+  }, [searchTerm]);
 
   React.useEffect(() => {
     if (!open) {
@@ -74,7 +75,7 @@ const Home = () => {
       </Box>
       <Box p={3}>
         <Autocomplete
-          id="location-input"
+          id="location-finder"
           open={open}
           onOpen={() => {
             setOpen(true);
@@ -82,31 +83,37 @@ const Home = () => {
           onClose={() => {
             setOpen(false);
           }}
-          isOptionEqualToValue={(option, value) => option.name === value.name}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           getOptionLabel={(option) => option.name}
           options={options}
-          loading={loading}
+          blurOnSelect
+          groupBy={(option) => option.country}
+          filterOptions={(x) => x}
           sx={{ width: 300, margin: 'auto' }}
+          onChange={(_, value) => setSelected(value)}
           renderInput={(params) => (
             <TextField
               {...params}
               label="Find a location"
               InputProps={{
                 ...params.InputProps,
-                endAdornment: (
-                  <React.Fragment>
-                    {loading ? (
-                      <CircularProgress color="inherit" size={20} />
-                    ) : null}
-                    {params.InputProps.endAdornment}
-                  </React.Fragment>
-                ),
+                onChange: (e) => setSearchTerm(e.currentTarget.value),
               }}
             />
           )}
         />
         <Box textAlign="center" p={2}>
-          <Button variant="contained">Take me there</Button>
+          <Button
+            component={Link}
+            variant="contained"
+            disabled={!selected}
+            to={selected ? `location/${selected.id}` : '/'}
+          >
+            Take me{' '}
+            {selected && selected.name.length < 20
+              ? `to ${selected.name}`
+              : 'there'}
+          </Button>
         </Box>
       </Box>
     </>

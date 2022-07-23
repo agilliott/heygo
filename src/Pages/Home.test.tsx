@@ -14,8 +14,4 @@ describe('<Home/>', () => {
       screen.getByRole('button', { name: /take me there/i })
     ).toBeInTheDocument();
   });
-  test('sets the correct data when a location is selected', () => {});
-  test('has the correctly selected location when button is clicked', () => {});
-  test('Displays loading when results are pending', () => {});
-  test('Displays message when no locations that match the search are found', () => {});
 });
