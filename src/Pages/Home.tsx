@@ -65,13 +65,13 @@ const Home = () => {
     setLoading(true);
     setOptions([]);
     debounceGetOptions(searchTerm);
-  }, [searchTerm]);
+  }, [searchTerm, debounceGetOptions]);
 
   React.useEffect(() => {
     if (!open) {
       setOptions([]);
     }
-  }, [open]);
+  }, [open, setOptions]);
 
   return (
     <Card
