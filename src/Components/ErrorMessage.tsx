@@ -32,10 +32,10 @@ const ErrorMessage = ({ status = 0 }: ErrorMessageProps) => {
     <Grid container spacing={3} padding={3}>
       <Grid item xs={12}>
         <Box p={3} textAlign="center">
-          <Typography variant="h1">
+          <Typography variant="h1" gutterBottom>
             {messageMap[status]?.title || 'An error occurred'}
           </Typography>
-          <Typography variant="h2">
+          <Typography variant="h2" gutterBottom>
             {messageMap[status]?.subtitle ||
               'We are sorry for any inconvenience caused.'}
           </Typography>

@@ -62,9 +62,11 @@ const Home = () => {
   );
 
   React.useEffect(() => {
-    setLoading(true);
-    setOptions([]);
-    debounceGetOptions(searchTerm);
+    if (searchTerm) {
+      setLoading(true);
+      setOptions([]);
+      debounceGetOptions(searchTerm);
+    }
   }, [searchTerm, debounceGetOptions]);
 
   React.useEffect(() => {

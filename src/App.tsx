@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Header, Footer } from './Components';
+import { Header, Footer, PageNotFound } from './Components';
 import { Home, Location } from './Pages';
 import { Grid } from '@mui/material';
 
@@ -15,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="location/:id" element={<Location />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>
       </Grid>
