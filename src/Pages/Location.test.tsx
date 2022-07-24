@@ -1,13 +1,13 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+
+import { renderWithRouter } from '../testUtils';
 import Location from './Location';
 
 describe('<Location/>', () => {
   test('renders the Locationpage content', () => {
-    render(<Location />);
+    renderWithRouter(<Location />);
   });
-  test('has a loading state when given an invalid url param', () => {
-    render(<Location />);
-    screen.getByRole('progressbar');
-  });
+  // Test error state
+  // Test loading state
+  // Test content hide/show logic
 });

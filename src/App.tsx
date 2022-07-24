@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header, Footer } from './Components';
 import { Home, Location } from './Pages';
-import { Grid, Box } from '@mui/material';
+import { Grid } from '@mui/material';
 
 function App() {
   return (

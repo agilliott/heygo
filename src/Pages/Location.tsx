@@ -2,7 +2,14 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios, { AxiosError } from 'axios';
 import { Map, Marker } from 'pigeon-maps';
-import { Grid, Typography, CircularProgress, Box, Button } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  CircularProgress,
+  Box,
+  Button,
+  Card,
+} from '@mui/material';
 import { ErrorMessage } from '../Components';
 
 interface City {
@@ -40,10 +47,10 @@ const Location = () => {
 
   React.useEffect(() => {
     axios(config)
-      .then(function(response) {
+      .then(function (response) {
         setCity(response.data.data);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         setError(error);
       });
   }, []);
@@ -58,38 +65,57 @@ const Location = () => {
     );
 
   return (
-    <Grid container spacing={3} padding={3}>
-      <Grid item xs={12}>
-        <Box p={3} textAlign="center">
-          <Typography variant="h1">Great choice!</Typography>
-          <Typography variant="h2">Now, about {city.name}</Typography>
-          <Typography>
-            {city.name} is a {city.type.toLowerCase()} in the region of{' '}
-            {city.region} in {city.country}.
+    <Card
+      sx={{
+        textAlign: 'center',
+        padding: (theme) => ({ xs: theme.spacing(1), md: theme.spacing(3) }),
+      }}
+    >
+      <Grid container spacing={3} padding={3}>
+        <Grid item xs={12}>
+          <Typography variant="h1" gutterBottom>
+            Great choice!
+          </Typography>
+          <Typography variant="h2" gutterBottom>
+            Now let's discover more about {city.name}
           </Typography>
           <Typography>
-            It has a population of {city.population} people and an elevation of{' '}
-            {city.elevationMeters} meters above sea level, fascinating!
+            {city.name} is a city in the region of {city.region} in{' '}
+            {city.country}.
           </Typography>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <Map
-          height={400}
-          defaultCenter={[city.latitude, city.longitude]}
-          defaultZoom={11}
-        >
-          <Marker width={50} anchor={[city.latitude, city.longitude]} />
-        </Map>
-      </Grid>
-      <Grid item xs={12}>
-        <Box textAlign="center">
-          <Button component={Link} variant="contained" to="/">
+          <Typography>
+            {city.population > 0 &&
+              city.elevationMeters > 0 &&
+              `It has a population of ${city.population} people and an elevation of ${city.elevationMeters} meters above sea level, fascinating!`}
+            {city.population > 0 &&
+              !city.elevationMeters &&
+              `It has a population of ${city.population} people, fascinating!`}
+            {!city.population &&
+              city.elevationMeters > 0 &&
+              `It has an elevation of ${city.elevationMeters} meters above sea level, fascinating!`}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Map
+            height={400}
+            defaultCenter={[city.latitude, city.longitude]}
+            defaultZoom={11}
+          >
+            <Marker width={50} anchor={[city.latitude, city.longitude]} />
+          </Map>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            sx={{ marginBottom: (theme) => theme.spacing(3) }}
+            component={Link}
+            variant="contained"
+            to="/"
+          >
             Take me home
           </Button>
-        </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </Card>
   );
 };
 

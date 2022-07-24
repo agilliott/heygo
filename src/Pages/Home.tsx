@@ -1,16 +1,15 @@
 import React from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Link } from 'react-router-dom';
 import {
-  Box,
   Typography,
   Autocomplete,
   TextField,
   Button,
+  Card,
+  Alert,
 } from '@mui/material';
 import debounce from 'lodash.debounce';
-
-// TODO: no options jolly message.
 
 interface Location {
   city: string;
@@ -32,6 +31,8 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = React.useState<string>('');
   const [selected, setSelected] = React.useState<Location | null>(null);
   const [options, setOptions] = React.useState<Location[]>([]);
+  const [error, setError] = React.useState<AxiosError | null>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   function getOptions(term: string) {
     const config = {
@@ -45,16 +46,25 @@ const Home = () => {
     };
 
     axios(config)
-      .then(function(response) {
+      .then(function (response) {
         setOptions(response.data.data);
+        setLoading(false);
       })
-      .catch(function(error) {
-        console.error(error);
+      .catch(function (error) {
+        setError(error);
       });
   }
 
+  // API is restricted to 1 call per second.
+  const debounceGetOptions = React.useMemo(
+    () => debounce(getOptions, 1000),
+    []
+  );
+
   React.useEffect(() => {
-    getOptions(searchTerm);
+    setLoading(true);
+    setOptions([]);
+    debounceGetOptions(searchTerm);
   }, [searchTerm]);
 
   React.useEffect(() => {
@@ -64,59 +74,75 @@ const Home = () => {
   }, [open]);
 
   return (
-    <>
-      <Box pt={3}>
-        <Typography variant="h1" textAlign="center">
-          <b>Hey</b>!
-        </Typography>
-        <Typography variant="h2" textAlign="center">
-          Where do you want to <b>go</b>?
-        </Typography>
-      </Box>
-      <Box p={3}>
-        <Autocomplete
-          id="location-finder"
-          open={open}
-          onOpen={() => {
-            setOpen(true);
-          }}
-          onClose={() => {
-            setOpen(false);
-          }}
-          isOptionEqualToValue={(option, value) => option.id === value.id}
-          getOptionLabel={(option) => option.name}
-          options={options}
-          blurOnSelect
-          groupBy={(option) => option.country}
-          filterOptions={(x) => x}
-          sx={{ width: 300, margin: 'auto' }}
-          onChange={(_, value) => setSelected(value)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Find a location"
-              InputProps={{
-                ...params.InputProps,
-                onChange: (e) => setSearchTerm(e.currentTarget.value),
-              }}
-            />
-          )}
-        />
-        <Box textAlign="center" p={2}>
-          <Button
-            component={Link}
-            variant="contained"
-            disabled={!selected}
-            to={selected ? `location/${selected.id}` : '/'}
-          >
-            Take me{' '}
-            {selected && selected.name.length < 20
-              ? `to ${selected.name}`
-              : 'there'}
-          </Button>
-        </Box>
-      </Box>
-    </>
+    <Card
+      elevation={1}
+      sx={{
+        width: 'min-content',
+        margin: 'auto',
+        padding: (theme) => theme.spacing(4),
+        textAlign: 'center',
+      }}
+    >
+      {error?.response?.status === 429 && (
+        <Alert
+          severity="warning"
+          sx={{ textAlign: 'left', marginBottom: (theme) => theme.spacing(3) }}
+        >
+          We are experiencing some request delays with our locations data.
+        </Alert>
+      )}
+      <Typography variant="h1" textAlign="center">
+        <b>Hey</b>!
+      </Typography>
+      <Typography variant="h2" textAlign="center">
+        Where do you want to <b>go</b>?
+      </Typography>
+      <Autocomplete
+        id="location-finder"
+        open={open}
+        onOpen={() => {
+          setOpen(true);
+        }}
+        onClose={() => {
+          setOpen(false);
+        }}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        getOptionLabel={(option) => option.name}
+        options={options}
+        loading={loading}
+        blurOnSelect
+        groupBy={(option) => option.country}
+        filterOptions={(x) => x}
+        sx={{
+          width: { xs: 250, md: 300 },
+          margin: 'auto',
+          marginTop: (theme) => theme.spacing(3),
+        }}
+        onChange={(_, value) => setSelected(value)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Find a location"
+            InputProps={{
+              ...params.InputProps,
+              onChange: (e) => setSearchTerm(e.currentTarget.value),
+            }}
+          />
+        )}
+      />
+      <Button
+        component={Link}
+        variant="contained"
+        disabled={!selected}
+        sx={{ marginTop: (theme) => theme.spacing(3) }}
+        to={selected ? `location/${selected.id}` : '/'}
+      >
+        Take me{' '}
+        {selected && selected.name.length < 20
+          ? `to ${selected.name}`
+          : 'there'}
+      </Button>
+    </Card>
   );
 };
 

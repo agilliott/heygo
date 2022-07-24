@@ -1,23 +1,23 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+
+import { renderWithRouter } from '../testUtils';
 import ErrorMessage from './ErrorMessage';
 
-// TODO: test map for the codes and default
-describe('<Error/>', () => {
-  test('renders the correct copy for the code', () => {
-    render(<ErrorMessage />);
-    expect(
-      screen.getByRole('heading', { name: /place unknown/i })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('heading', {
-        name: /Looks like you might be list lost/i,
-      })
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('link', {
-        name: /lets go home/i,
-      })
-    ).toBeInTheDocument();
-  });
+describe('<ErrorMessage/>', () => {
+  test.each`
+    status | message
+    ${404} | ${/Location unknown/i}
+    ${429} | ${/Too many searches/i}
+    ${0}   | ${/An error occurred/i}
+  `(
+    'renders the correct copy for the status $status',
+    ({ status, message }) => {
+      renderWithRouter(<ErrorMessage status={status} />);
+
+      expect(
+        screen.getByRole('heading', { name: message })
+      ).toBeInTheDocument();
+    }
+  );
 });

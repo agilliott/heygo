@@ -19,14 +19,12 @@ const ErrorMessage = ({ status = 0 }: ErrorMessageProps) => {
     404: {
       title: 'Location unknown',
       subtitle: 'Looks like you might be lost',
-      text:
-        'Unfortunately we have no details for the location you are trying to view. Head back home and try again.',
+      text: 'Unfortunately we have no details for the location you are trying to view. Head back home and try again.',
     },
     429: {
       title: 'Too many searches',
       subtitle: "It's great you're so eager but...",
-      text:
-        'Unfortunately we have a rate limit of 1 call per second, so please wait a few seconds and try again.',
+      text: 'Unfortunately we have a rate limit of 1 call per second, so please wait a few seconds and try again.',
     },
   };
 
@@ -35,14 +33,14 @@ const ErrorMessage = ({ status = 0 }: ErrorMessageProps) => {
       <Grid item xs={12}>
         <Box p={3} textAlign="center">
           <Typography variant="h1">
-            {messageMap[status].title || 'An error occurred'}
+            {messageMap[status]?.title || 'An error occurred'}
           </Typography>
           <Typography variant="h2">
-            {messageMap[status].subtitle ||
+            {messageMap[status]?.subtitle ||
               'We are sorry for any inconvenience caused.'}
           </Typography>
           <Typography>
-            {messageMap[status].text ||
+            {messageMap[status]?.text ||
               'Please return to the home page and try again.'}
           </Typography>
         </Box>

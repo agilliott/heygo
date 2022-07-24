@@ -1,17 +1,25 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
+
+import { renderWithRouter } from '../testUtils';
 import Home from './Home';
 
 describe('<Home/>', () => {
-  test('renders the homepage content', () => {
-    render(<Home />);
+  test('renders the homepage content', async () => {
+    renderWithRouter(<Home />);
+
     expect(screen.getByText(/hey/i)).toBeInTheDocument();
-    expect(screen.getByText(/where do you want to go/i)).toBeInTheDocument();
     expect(
-      screen.getByRole('textfield', { name: /where do you want to go/i })
+      screen.getByText(/where do you want/i, { exact: false }).textContent
+    ).toEqual('Where do you want to go?');
+    expect(
+      screen.getByRole('combobox', { name: /find a location/i })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /take me there/i })
-    ).toBeInTheDocument();
+      await screen.findByRole('link', { name: /take me there/i })
+    ).toHaveClass('Mui-disabled');
   });
+  // Test button change
+  // Test no options
+  // Test loading
 });
