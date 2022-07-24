@@ -7,9 +7,6 @@ import { theme } from './theme';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-// TODO: Theme - make colours and font sizes better
-// TODO: routing
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

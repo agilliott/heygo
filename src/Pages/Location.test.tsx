@@ -4,7 +4,7 @@ import { renderWithRouter } from '../testUtils';
 import Location from './Location';
 
 describe('<Location/>', () => {
-  test('renders the Locationpage content', () => {
+  test('renders the Location page content', () => {
     renderWithRouter(<Location />);
   });
   // Test error state

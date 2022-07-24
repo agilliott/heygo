@@ -12,7 +12,7 @@ This is hosted by [Netlify](netlify.com) and has CD on merge to main.
 
 [Axios](https://axios-http.com/docs/intro) - for a nicer interface for requests than vanilla.
 
-[React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) - amazing library for writing tests from the perspective of your users not a machine. This means you are always testing for a11y as you go and allows you to directly map requirements and user storys to tests.]
+[React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) - amazing library for writing tests from the perspective of your users not a machine. This means you are always testing for a11y as you go and allows you to directly map requirements and user stories to tests.]
 
 [React router](https://reactrouter.com/docs/en/v6/getting-started/overview) - again a quick and easy to use library for routing in react.
 
@@ -41,7 +41,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `npm run cypress`
 
-Launches the cypress test runner. For these tests to work, the site must be running in the development mode first using `npm start` in a separate terminal.
+Launches the cypress test runner for e2e tests. For these tests to work, the site must be running in the development mode first using `npm start` in a separate terminal.
 
 ### `npm run build`
 
