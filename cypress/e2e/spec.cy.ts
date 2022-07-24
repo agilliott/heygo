@@ -25,9 +25,9 @@ describe('Heygo frontend test site', () => {
 
       // Confirm location page content
       cy.url().should('include', '/location/121210');
-      cy.findByRole('heading', { name: /great choice/i });
+      cy.findByRole('heading', { name: /Cokato/i });
       cy.findByRole('heading', {
-        name: /Now let's discover more about Cokato/i,
+        name: /Great choice! Let's take a look./i,
       });
 
       // Find map
@@ -49,7 +49,7 @@ describe('Heygo frontend test site', () => {
       // Navigate and confirm page contents
       cy.visit('/location/121210');
       cy.findByRole('heading', {
-        name: /Now let's discover more about Cokato/i,
+        name: /Cokato/i,
       });
 
       // Simulate an immediate refresh

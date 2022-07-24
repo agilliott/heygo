@@ -37,11 +37,11 @@ const Home = () => {
   function getOptions(term: string) {
     const config = {
       method: 'GET',
-      url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
+      url: process.env.REACT_APP_RAPID_API_GEODB_URL,
       params: { namePrefix: term, limit: '10' },
       headers: {
-        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_GEODB_KEY || '',
-        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
+        'X-RapidAPI-Key': `${process.env.REACT_APP_RAPID_API_GEODB_KEY}`,
+        'X-RapidAPI-Host': `${process.env.REACT_APP_RAPID_API_GEODB_HOST}`,
       },
     };
 

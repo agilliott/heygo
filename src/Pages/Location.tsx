@@ -39,12 +39,13 @@ const Location = () => {
   React.useEffect(() => {
     const config = {
       method: 'GET',
-      url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities/${id}`,
+      url: `${process.env.REACT_APP_RAPID_API_GEODB_URL}/${id}`,
       headers: {
-        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_GEODB_KEY || '',
-        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
+        'X-RapidAPI-Key': `${process.env.REACT_APP_RAPID_API_GEODB_KEY}`,
+        'X-RapidAPI-Host': `${process.env.REACT_APP_RAPID_API_GEODB_HOST}`,
       },
     };
+
     axios(config)
       .then(function (response) {
         setCity(response.data.data);
@@ -73,10 +74,10 @@ const Location = () => {
       <Grid container spacing={3} padding={3}>
         <Grid item xs={12}>
           <Typography variant="h1" gutterBottom>
-            Great choice!
+            {city.name}
           </Typography>
           <Typography variant="h2" gutterBottom>
-            Now let's discover more about {city.name}
+            Great choice! Let's take a look.
           </Typography>
           <Typography>
             {city.name} is a city in the region of {city.region} in{' '}

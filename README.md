@@ -10,7 +10,7 @@ This is hosted by [Netlify](netlify.com) and has CD on merge to main.
 
 [Material UI](https://mui.com/material-ui/getting-started/overview/) - this component library was chosen because it allows me to move quickly as I am familiar with it and many component library interfaces are similar. It uses emotion for styling which is very diverse and has a good range of components and icons build with a11y in mind.
 
-[Axios](https://axios-http.com/docs/intro) - for a nicer interface for requests than vanilla.
+[Axios](https://axios-http.com/docs/intro) - for a nicer interface for requests than vanilla and we can use `axios-mock-adapter` for easy mocking in unit tests.
 
 [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) - amazing library for writing tests from the perspective of your users not a machine. This means you are always testing for a11y as you go and allows you to directly map requirements and user stories to tests.]
 
