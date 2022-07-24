@@ -12,4 +12,13 @@ export const theme = createTheme({
       fontSize: '2rem',
     },
   },
+  components: {
+    MuiAutocomplete: {
+      styleOverrides: {
+        groupLabel: {
+          backgroundColor: '#2a2a2a',
+        },
+      },
+    },
+  },
 });

@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode> // We have to disable this because of the api throttling
   <ThemeProvider theme={theme}>
-    <CssBaseline />
+    <CssBaseline enableColorScheme />
     <App />
   </ThemeProvider>
   // </React.StrictMode>
