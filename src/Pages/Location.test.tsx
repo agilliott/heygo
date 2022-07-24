@@ -15,7 +15,7 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-const responseDate = {
+const responseData = {
   id: 2989781,
   wikiDataId: 'Q7852824',
   type: 'CITY',
@@ -43,7 +43,7 @@ describe('<Location/>', () => {
       mockedAxios
         .onGet('https://wft-geo-db.p.rapidapi.com/v1/geo/cities/123')
         .reply(200, {
-          data: responseDate,
+          data: responseData,
         });
     });
 
