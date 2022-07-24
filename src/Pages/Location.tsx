@@ -36,16 +36,15 @@ const Location = () => {
   const [city, setCity] = React.useState<City | null>(null);
   const [error, setError] = React.useState<AxiosError | null>(null);
 
-  const config = {
-    method: 'GET',
-    url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities/${id}`,
-    headers: {
-      'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_GEODB_KEY || '',
-      'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
-    },
-  };
-
   React.useEffect(() => {
+    const config = {
+      method: 'GET',
+      url: `https://wft-geo-db.p.rapidapi.com/v1/geo/cities/${id}`,
+      headers: {
+        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_GEODB_KEY || '',
+        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
+      },
+    };
     axios(config)
       .then(function (response) {
         setCity(response.data.data);
@@ -53,7 +52,7 @@ const Location = () => {
       .catch(function (error) {
         setError(error);
       });
-  }, []);
+  }, [id]);
 
   if (error) return <ErrorMessage status={error?.response?.status} />;
 
