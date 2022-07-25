@@ -41,7 +41,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `npm run cypress`
 
-Launches the cypress test runner for e2e tests. For these tests to work, the site must be running in the development mode first using `npm start` in a separate terminal.
+Launches the cypress test runner for e2e tests. For these tests to work, the site must be running in the development mode first using `npm start` in a separate terminal. Once loaded, select E2E testing and choose a browser to run the tests in, then in specs, run spec.cy.ts.
 
 ### `npm run build`
 
