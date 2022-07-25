@@ -27,7 +27,7 @@ The objective is to provide a user interface to search for and display points of
 
 ---
 
-Url: `https://code-challenge-backend.herokuapp.com`
+Url: `https://heygo-code-challenge.herokuapp.com/`
 
 ---
 
