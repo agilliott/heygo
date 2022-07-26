@@ -6,6 +6,20 @@ You can view the live site [https://graceful-cuchufli-684282.netlify.app/](https
 
 This is hosted by [Netlify](netlify.com) and has CD on merge to main.
 
+## Local set up
+
+To run this locally you need to set up a .env file that holds the following variables:
+
+```
+REACT_APP_RAPID_API_GEODB_URL=https://wft-geo-db.p.rapidapi.com/v1/geo/cities
+REACT_APP_RAPID_API_GEODB_KEY=SIGN-UP-FOR-KEY
+REACT_APP_RAPID_API_GEODB_HOST=wft-geo-db.p.rapidapi.com
+```
+
+For the key, you will need to sign up for free to get a key at [Rapidapi](https://rapidapi.com/wirefreethought/api/geodb-cities/), or contact me to provide you with a temporary one. 
+
+Local dev and cypress testing will not work without this key.
+
 ## Libraries
 
 [Material UI](https://mui.com/material-ui/getting-started/overview/) - this component library was chosen because it allows me to move quickly as I am familiar with it and many component library interfaces are similar. It uses emotion for styling which is very diverse and has a good range of components and icons build with a11y in mind.
